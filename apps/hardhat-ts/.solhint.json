@@ -16,7 +16,7 @@
     ],
     "compiler-version": [
       "error",
-      "^0.8.9"
+      "^0.8.13"
     ],
     "const-name-snakecase": "off",
     "func-name-mixedcase": "off",
