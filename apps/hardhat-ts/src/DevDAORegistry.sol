@@ -26,8 +26,8 @@ contract DevDAORegistry {
         bytes content;
     }
 
-    mapping(address => EnumerableSet.UintSet) public registrantToTokenIds;
-    mapping(address => EnumerableSet.UintSet) public controllerToTokenIds;
+    mapping(address => EnumerableSet.UintSet) registrantToTokenIds;
+    mapping(address => EnumerableSet.UintSet) controllerToTokenIds;
     mapping(uint256 => DevDAOTextMetadata) public textRecords;
     mapping(uint256 => DevDAOAddressMetadata) public addressRecords;
     mapping(uint256 => DevDAOContentMetadata) public contentRecords;
