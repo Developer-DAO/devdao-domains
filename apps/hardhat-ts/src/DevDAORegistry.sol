@@ -2,8 +2,10 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DevDAORegistry {
+contract DevDAORegistry is Ownable, Initializable {
     using EnumerableSet for EnumerableSet.UintSet;
 
     struct DevDAOTextMetadata {
@@ -26,8 +28,8 @@ contract DevDAORegistry {
         bytes content;
     }
 
-    mapping(address => EnumerableSet.UintSet) registrantToTokenIds;
     mapping(address => EnumerableSet.UintSet) controllerToTokenIds;
+    mapping(string => uint256) namesToTokenId;
     mapping(uint256 => DevDAOTextMetadata) public textRecords;
     mapping(uint256 => DevDAOAddressMetadata) public addressRecords;
     mapping(uint256 => DevDAOContentMetadata) public contentRecords;
@@ -38,6 +40,14 @@ contract DevDAORegistry {
             "ONLY_CONTROLLER"
         );
         _;
+    }
+
+    function initialize() external initializer {
+        _transferOwnership(msg.sender);
+    }
+
+    function setName(uint256 tokenId, string calldata name) external onlyOwner {
+        namesToTokenId[name] = tokenId;
     }
 
     function setText(uint256 tokenId, bytes calldata _newTextRecord)
