@@ -1,12 +1,15 @@
-import "../styles/global.css";
-import { WagmiProvider } from "ui";
-import type { AppProps } from "next/app";
+import '../styles/global.css';
+import { WagmiProvider } from 'ui';
+import type { AppProps } from 'next/app';
+import { ChakraProvider } from '@chakra-ui/react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <WagmiProvider>
-      <Component {...pageProps} />
-    </WagmiProvider>
+    <ChakraProvider>
+      <WagmiProvider>
+        <Component {...pageProps} />
+      </WagmiProvider>
+    </ChakraProvider>
   );
 }
 
