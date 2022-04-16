@@ -48,8 +48,14 @@ contract DevDAONameService is Ownable {
 
     function mint(string calldata name) external payable {
         uint256 length = bytes(name).length; // we don't care about non-UTF8 lengths
-        require(minLength <= length && length <= maxLength, "DISALLOWED_LENGTH");
-        require(msg.value >= oracle.lengthToPrices(uint8(length)), "NOT_ENOUGH_ETH");
+        require(
+            minLength <= length && length <= maxLength,
+            "DISALLOWED_LENGTH"
+        );
+        require(
+            msg.value >= oracle.lengthToPrices(uint8(length)),
+            "NOT_ENOUGH_ETH"
+        );
         treasury.call{value: msg.value}("");
         require(token.mint(msg.sender, name), "MINT_FAILED");
     }
