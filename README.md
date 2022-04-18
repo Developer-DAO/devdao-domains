@@ -1,9 +1,10 @@
-# full-stack dApp starter for solidity smart contract development
+# DEVELOPER_DAO DOMAINS
 
-A monorepo boilerplate code for typesafe full-stack [Solidity](https://soliditylang.org/) development.
+Implementation for registrars and local resolved for the Developer DAO Naming Service.
 
 ## Contents
   - [Prerequisites](#prerequisites)
+  - [Contracts](#contracts)
   - [Features](#features)
   - [Run in Gitpod](#run-in-gitpod)
   - [Run Locally](#run-locally)
@@ -16,6 +17,40 @@ A monorepo boilerplate code for typesafe full-stack [Solidity](https://solidityl
 - [pnpm](https://pnpm.io/)
 - [Node.js](https://nodejs.org/en/download/)
 - [MetaMask wallet browser extension](https://metamask.io/download.html).
+
+## Contracts
+
+## DevDAONFT.sol
+Implementation of the naming service NFT, the contract used to mint an ERC721 token linked to each name. The functionality includes:
+- Mapping for each name to token Id
+- Minting an ERC721 token linked to each name
+
+
+## DevDAONameService.sol
+Implmentation of naming service transaction, the contract used to check name length and mint ERC721 tokens (by communicating with the DevDAONFT.sol). The functionality includes:
+- Checking string length is more than minimum
+- Checking string length is less than maximum
+- Minting an ERC721 token (by communicating with DevDAONFT.sol) and transferring funds to the treasury address
+
+
+## DevDAOPriceOracle.sol
+Implementation of pricing for the naming service, the contract used by the contract owner to set pricing based on name length. The functionality includes:
+- Mapping for each price to name string length
+- Setter for pricing of each name string length
+
+
+## DevDAORegistry.sol
+The implementation of the registry, the contract used by the token owner to set metadata that will correspond with each name and the respective token Id. The functinality includes:
+- Setter for name to token Id
+- Setter for user profile metadata struct
+- Setter for address metadata
+- Setter for content
+
+
+## DevDAOResolver.sol
+The implementation of the resolver.
+
+
 
 ## Features
 
@@ -55,7 +90,7 @@ The chain ID should be 1337. If you have a localhost rpc set up, you may need to
 
 ![MetaMask RPC Import](wallet.png)
 
-you can also change your status of your open ports by going to port settings.
+You can also change your status of your open ports by going to port settings.
 <br/>
 
 ![port settings](gitpod-port.png)
