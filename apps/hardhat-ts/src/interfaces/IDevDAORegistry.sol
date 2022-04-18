@@ -11,7 +11,13 @@ interface IDevDAORegistry {
 
     function initialize() external;
 
-    function namesToTokenId(string calldata name) external view returns (uint256);
+    function namesToTokenId(string calldata name)
+        external
+        view
+        returns (uint256);
 
-    function addressRecords(uint256 tokenId) external view returns (DevDAOAddressMetadata calldata);
+    function addressRecords(uint256 tokenId)
+        external
+        view
+        returns (DevDAOAddressMetadata calldata);
 }
