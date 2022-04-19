@@ -1,6 +1,12 @@
 import { expect } from "./chai-setup";
-import { ethers, } from "hardhat";
+import { ethers, deployments } from "hardhat";
 import { Signer } from "ethers";
+import {
+  DevDAONameService,
+  DevDAONFT,
+  DevDAOPriceOracle,
+  DevDAORegistry
+} from "../../web/src/typechain";
 
 let service: any;
 let token: any;
@@ -8,35 +14,29 @@ let oracle: any;
 let registry: any;
 let deployer: Signer, alice: Signer, treasury: Signer;
 
+const setup = deployments.createFixture(async () => {
+  await deployments.fixture("DevDAONFT");
+  await deployments.fixture("DevDAOPriceOracle");
+  await deployments.fixture("DevDAORegistry");
+  await deployments.fixture("DevDAONameService");
+
+  const contracts = {
+    token: <DevDAONFT>await ethers.getContract("DevDAONFT"),
+    oracle: <DevDAOPriceOracle>await ethers.getContract("DevDAOPriceOracle"),
+    registry: <DevDAORegistry>await ethers.getContract("DevDAORegistry"),
+    service: <DevDAONameService>await ethers.getContract("DevDAONameService"),
+  }
+
+  return {
+    ...contracts,
+    users: await ethers.getSigners()
+  }
+})
+
 describe("Developer DAO Name Service", () => {
-  beforeEach(async () => {
-    const Nft      = await ethers.getContractFactory("DevDAONFT");
-    const Oracle   = await ethers.getContractFactory("DevDAOPriceOracle");
-    const Registry = await ethers.getContractFactory("DevDAORegistry");
-
-    token = await Nft.deploy();
-
-    oracle = await Oracle.deploy();
-    registry = await Registry.deploy();
-
-    await token.deployed();
-    await oracle.deployed();
-    await registry.deployed();
-
-    [deployer, alice, treasury] = await ethers.getSigners();
-
-    const NameService = await ethers.getContractFactory("DevDAONameService");
-    service = await NameService.deploy(
-      token.address,
-      registry.address,
-      oracle.address,
-      await treasury.getAddress(),
-    );
-
-    await service.deployed();
-  });
   describe("DevDAONameService#mint", () => {
     it("throws when name is too long", async () => {
+      const { service, users: [alice,]} = await setup()
       try {
         service.connect(alice).mint("A".repeat(10*10));
       } catch (error: any) {
@@ -45,6 +45,7 @@ describe("Developer DAO Name Service", () => {
     });
 
     it("throws when name is too short", async () => {
+      const { service, users: [alice,]} = await setup()
       try {
         service.connect(alice).mint("A");
       } catch (error: any) {
@@ -53,6 +54,13 @@ describe("Developer DAO Name Service", () => {
     });
 
     it("mints a token", async () => {
+      const {
+        token,
+        oracle,
+        service,
+        users: [alice,]
+      } = await setup()
+
       const name = "alice";
       const value = await oracle.lengthToPrices(name.length);
       await service.connect(alice).mint(name, { value });
