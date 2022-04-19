@@ -7,23 +7,7 @@ export default function Web() {
   const router = useRouter();
 
   return (
-    <VStack width="6xl" marginX="auto" gap="12">
-      <HStack
-        width="full"
-        marginTop="10"
-        justifyContent="space-between"
-        alignItems="flex-start"
-      >
-        <Heading
-          cursor="pointer"
-          fontSize="3xl"
-          onClick={() => router.push('/')}
-        >
-          .D_D
-        </Heading>
-        <ConnectWalletButton />
-      </HStack>
-
+    <>
       <Heading textAlign="center" fontSize="5xl" fontWeight="bold">
         .devdao domains
       </Heading>
@@ -46,6 +30,6 @@ export default function Web() {
           <FaGithub />
         </Button>
       </HStack>
-    </VStack>
+    </>
   );
 }
