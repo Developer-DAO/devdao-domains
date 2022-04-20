@@ -1,4 +1,4 @@
-import { Flex, Input, InputGroup, Button, Box, Spinner, Text } from '@chakra-ui/react'
+import { Flex, VStack, Input, InputGroup, Heading, Button, Box, Spinner, Text } from '@chakra-ui/react'
 import { useState, useRef } from 'react'
 
 export const ClaimForm = () => {
@@ -28,16 +28,17 @@ export const ClaimForm = () => {
   }
 
   return (
-    <>
+    <VStack gap={10} pt={[10, '0']}>
+      <Heading fontSize={['2xl', '5xl']} fontWeight="bold">claim your .devdao domain</Heading>
       <Flex>
-        <InputGroup size='lg' w='40vw'>
+        <InputGroup size='lg' w={['60vw', '40vw']}>
           <Input ref={domainRef} placeholder='Search for .devdao'
             borderColor={isInvalid ? 'red.300' : 'gray.200'} />
         </InputGroup>
-        <Button mx={2} onClick={handleClick} size='lg' bg='none' border='1px solid' borderColor='gray.200'>Search</Button>
+        <Button mx={2} onClick={handleClick} boxShadow='0px 0px 7px #a5a5a5' size='lg' bg='none' border='1px solid' borderColor='gray.200'>Search</Button>
       </Flex>
       <Box>
-        {errorMsg && <Text fontSize='lg' color='red.500'>{errorMsg}</Text>}
+        {errorMsg && <Text fontSize='2xl' color='red.500'>{errorMsg}</Text>}
         {isLoading && <Spinner />}
         {errorMsg.length == 0 && (
           <Flex gap='2rem'>
@@ -47,7 +48,7 @@ export const ClaimForm = () => {
           </Flex>
         )}
       </Box>
-    </>
+    </VStack>
   )
 }
 
