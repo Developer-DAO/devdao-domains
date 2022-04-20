@@ -15,12 +15,16 @@ export const ClaimForm = () => {
       setErrorMsg('Domain must be more than 3 characters long')
       setIsInvalid(true);
     }
-    else {
-      setIsInvalid(false)
-      setErrorMsg('')
-      setDomain(domain)
-      setIsLoading(false)
+    else if (list.includes(domain)) {
+      setErrorMsg('Domain not available')
+      setIsInvalid(true);
     }
+    else {
+      setIsInvalid(false);
+      setErrorMsg('');
+      setDomain(domain);
+    }
+    setIsLoading(false)
   }
 
   return (
@@ -33,10 +37,24 @@ export const ClaimForm = () => {
         <Button mx={2} onClick={handleClick} size='lg' bg='none' border='1px solid' borderColor='gray.200'>Search</Button>
       </Flex>
       <Box>
-        {errorMsg && <Text color='red.500'>{errorMsg}</Text>}
-        {isLoading && !errorMsg.length > 0 && <Spinner />}
-        {}
+        {errorMsg && <Text fontSize='lg' color='red.500'>{errorMsg}</Text>}
+        {isLoading && <Spinner />}
+        {errorMsg.length == 0 && (
+          <Flex gap='2rem'>
+            <Text fontSize='2xl' color='green.500'>{domain}.devdao</Text>
+            <Button bg='none' border='1px solid' borderColor='gray.200'
+              boxShadow='0px 0px 7px #a5a5a5'>claim</Button>
+          </Flex>
+        )}
       </Box>
     </>
   )
 }
+
+// this is placeholder
+const list = [
+  'dhaiwat',
+  'cachemonet',
+  'pbillingsby',
+  'ropats16'
+]
