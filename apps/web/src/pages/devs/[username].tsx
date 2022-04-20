@@ -1,11 +1,12 @@
 import { ContractCard } from '@/components/ContractCard';
 import { ContributionCard } from '@/components/ContributionCard';
 import { DAOCard } from '@/components/DAOCard';
+import { NFTCard } from '@/components/NFTCard';
 import {
   Avatar,
   Box,
   Button,
-  Container,
+  Center,
   Divider,
   Heading,
   HStack,
@@ -28,7 +29,7 @@ const Page: NextPage = () => {
         <title>{username}.devdao | devdao domains</title>
       </Head>
       <Box minH='100vh' minW='100vw' maxW='100vw'>
-        <Container py='10'>
+        <Center py='10' px='20' mx='0'>
           <VStack spacing='4'>
             <Avatar
               src='https://avatars.githubusercontent.com/u/39617427'
@@ -125,9 +126,57 @@ const Page: NextPage = () => {
               </SimpleGrid>
             </VStack>
 
-            {/* TODO: Add NFTs section */}
+            <Divider />
+
+            <VStack>
+              <Heading as='h3' size='md'>
+                My NFTs
+              </Heading>
+
+              <SimpleGrid spacing={4} columns={3} py='5' h='400' overflowY='scroll'>
+                <NFTCard
+                  link="https://opensea.io/assets/matic/0x3cd266509d127d0eac42f4474f57d0526804b44e/9740"
+                  image="https://tokens.buildspace.so/assets/CHf7d3f8a8-5ac3-4676-8fe4-220e8a755104-517/render.png"
+                  collection="buildspace v2"
+                  name="Buildspace: Intro to Web3 | Cohort Leo | #518"
+                />
+                <NFTCard
+                  link="https://opensea.io/assets/matic/0x916b13fca6192fe5e4e2cd58f712ba9ade43ced0/7552"
+                  image="https://ipfs.io/ipfs/QmQQpDbHBpsUyr16CWsCn5ji4TpZzoYxTmeZJchvRjpYmn"
+                  collection="Pixel Devs"
+                  name="7552"
+                />
+                <NFTCard
+                  link="https://opensea.io/assets/matic/0x3cd266509d127d0eac42f4474f57d0526804b44e/9846"
+                  image="https://tokens.buildspace.so/assets/CH42b124b3-5b74-4c8f-a0f4-122e8e662bea-531/render.png"
+                  collection="buildspace v2"
+                  name="Build a Web3 App: Mint Your Own NFT collection | Cohort Haedus | #532"
+                />
+                <NFTCard
+                  link="https://opensea.io/assets/matic/0x3cd266509d127d0eac42f4474f57d0526804b44e/9740"
+                  image="https://tokens.buildspace.so/assets/CHf7d3f8a8-5ac3-4676-8fe4-220e8a755104-517/render.png"
+                  collection="buildspace v2"
+                  name="Buildspace: Intro to Web3 | Cohort Leo | #518"
+                />
+                <NFTCard
+                  link="https://opensea.io/assets/matic/0x916b13fca6192fe5e4e2cd58f712ba9ade43ced0/7552"
+                  image="https://ipfs.io/ipfs/QmQQpDbHBpsUyr16CWsCn5ji4TpZzoYxTmeZJchvRjpYmn"
+                  collection="Pixel Devs"
+                  name="7552"
+                />
+                <NFTCard
+                  link="https://opensea.io/assets/matic/0x3cd266509d127d0eac42f4474f57d0526804b44e/9846"
+                  image="https://tokens.buildspace.so/assets/CH42b124b3-5b74-4c8f-a0f4-122e8e662bea-531/render.png"
+                  collection="buildspace v2"
+                  name="Build a Web3 App: Mint Your Own NFT collection | Cohort Haedus | #532"
+                />
+              </SimpleGrid>
+            </VStack>
+
+            <Divider />
+
           </VStack>
-        </Container>
+        </Center>
       </Box>
     </>
   );
