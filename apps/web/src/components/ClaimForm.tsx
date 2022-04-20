@@ -18,8 +18,6 @@ export const ClaimForm = () => {
     else {
       setIsInvalid(false)
       setErrorMsg('')
-
-      debugger
       setDomain(domain)
       setIsLoading(false)
     }
@@ -27,18 +25,18 @@ export const ClaimForm = () => {
 
   return (
     <>
-    <Flex>
-      <InputGroup size='lg' w='40vw'>
-        <Input ref={domainRef} placeholder='Search for .devdao'
-          borderColor={isInvalid ? 'red.300' : 'gray.200'} />
-      </InputGroup>
-      <Button mx={2} onClick={handleClick} size='lg' bg='none' border='1px solid' borderColor='gray.200'>Search</Button>
-    </Flex>
-    <Box>
-      {errorMsg && <Text color='red.500'>{errorMsg}</Text>}
-      {isLoading && !errorMsg.length > 0 && <Spinner />}
-      {}
-    </Box>
+      <Flex>
+        <InputGroup size='lg' w='40vw'>
+          <Input ref={domainRef} placeholder='Search for .devdao'
+            borderColor={isInvalid ? 'red.300' : 'gray.200'} />
+        </InputGroup>
+        <Button mx={2} onClick={handleClick} size='lg' bg='none' border='1px solid' borderColor='gray.200'>Search</Button>
+      </Flex>
+      <Box>
+        {errorMsg && <Text color='red.500'>{errorMsg}</Text>}
+        {isLoading && !errorMsg.length > 0 && <Spinner />}
+        {}
+      </Box>
     </>
   )
 }
