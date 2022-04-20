@@ -40,7 +40,7 @@ export const ClaimForm = () => {
       <Box>
         {errorMsg && <Text fontSize='2xl' color='red.500'>{errorMsg}</Text>}
         {isLoading && <Spinner />}
-        {errorMsg.length == 0 && (
+        {errorMsg.length == 0 && domain.length > 1 && (
           <Flex gap='2rem'>
             <Text fontSize='2xl' color='green.500'>{domain}.devdao</Text>
             <Button bg='none' border='1px solid' borderColor='gray.200'
