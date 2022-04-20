@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Container>
         <Footer />
       </WagmiProvider>
-    </ChakraProvider >
+    </ChakraProvider>
   );
 }
 
