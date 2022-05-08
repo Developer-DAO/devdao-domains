@@ -29,10 +29,10 @@ contract DevDAORegistry is Ownable, Initializable {
         bytes content;
     }
 
-    IDevDAONFT token;
+    IDevDAONFT public token;
 
-    mapping(address => EnumerableSet.UintSet) controllerToTokenIds;
-    mapping(string => uint256) namesToTokenId;
+    mapping(address => EnumerableSet.UintSet) private controllerToTokenIds;
+    mapping(string => uint256) public namesToTokenId;
     mapping(uint256 => DevDAOTextMetadata) public textRecords;
     mapping(uint256 => DevDAOAddressMetadata) public addressRecords;
     mapping(uint256 => DevDAOContentMetadata) public contentRecords;

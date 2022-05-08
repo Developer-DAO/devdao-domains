@@ -35,6 +35,7 @@ contract DevDAONameService is Ownable {
         payable
         onlyOwner
     {
+        // solhint-disable-next-line
         _contract.call{value: msg.value}(_calldata);
     }
 
@@ -57,6 +58,7 @@ contract DevDAONameService is Ownable {
             "NOT_ENOUGH_ETH"
         );
         require(registry.namesToTokenId(name) == 0, "ALREADY_MINTED");
+        // solhint-disable-next-line
         treasury.call{value: msg.value}("");
         require(token.mint(msg.sender, name), "MINT_FAILED");
     }

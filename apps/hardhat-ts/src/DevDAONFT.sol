@@ -6,12 +6,14 @@ import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IDevDAORegistry.sol";
 
-contract DevDAONFT is ERC721, Ownable, Initializable {
-    IDevDAORegistry registry;
+contract DevDAONFT is
+    ERC721("DEVDAO Domains", ".devdao"),
+    Ownable,
+    Initializable
+{
+    IDevDAORegistry public registry;
     uint256 public tokenId;
     mapping(uint256 => string) public names;
-
-    constructor() ERC721("DEVDAO Domains", ".devdao") {}
 
     function initialize(IDevDAORegistry _registry) external initializer {
         registry = _registry;
