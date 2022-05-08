@@ -25,8 +25,8 @@ contract DevDAONameService is Ownable {
         registry = _registry;
         oracle = _oracle;
         treasury = _treasury;
-        token.initialize();
-        registry.initialize();
+        token.initialize(address(_registry));
+        registry.initialize(address(_token));
         oracle.initialize();
     }
 
@@ -56,6 +56,7 @@ contract DevDAONameService is Ownable {
             msg.value >= oracle.lengthToPrices(uint8(length)),
             "NOT_ENOUGH_ETH"
         );
+        require(registry.namesToTokenId(name) == 0, "ALREADY_MINTED");
         treasury.call{value: msg.value}("");
         require(token.mint(msg.sender, name), "MINT_FAILED");
     }

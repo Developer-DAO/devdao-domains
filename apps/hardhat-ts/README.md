@@ -8,13 +8,11 @@ pnpm install
 
 ## TEST
 
-
 - test using hardhat that can leverage hardhat-deploy to reuse deployment procedures and named accounts:
 
 ```bash
 pnpm test
 ```
-
 
 ## SCRIPTS
 

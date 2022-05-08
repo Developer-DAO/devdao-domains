@@ -9,7 +9,9 @@ interface IDevDAORegistry {
         bytes32 litecoin;
     }
 
-    function initialize() external;
+    function initialize(address token) external;
+
+    function setName(uint256 tokenId, string calldata name) external;
 
     function namesToTokenId(string calldata name)
         external

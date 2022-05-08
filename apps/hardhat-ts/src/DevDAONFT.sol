@@ -4,14 +4,17 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./interfaces/IDevDAORegistry.sol";
 
 contract DevDAONFT is ERC721, Ownable, Initializable {
+    IDevDAORegistry registry;
     uint256 public tokenId;
     mapping(uint256 => string) public names;
 
     constructor() ERC721("DEVDAO Domains", ".devdao") {}
 
-    function initialize() external initializer {
+    function initialize(IDevDAORegistry _registry) external initializer {
+        registry = _registry;
         _transferOwnership(msg.sender);
     }
 
@@ -20,8 +23,10 @@ contract DevDAONFT is ERC721, Ownable, Initializable {
         onlyOwner
         returns (bool)
     {
-        names[tokenId] = name;
-        _mint(_to, ++tokenId);
+        uint256 currentTokenId = ++tokenId;
+        names[currentTokenId] = name;
+        _mint(_to, currentTokenId);
+        registry.setName(currentTokenId, name);
         return true;
     }
 }

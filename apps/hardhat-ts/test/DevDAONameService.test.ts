@@ -5,7 +5,7 @@ import {
   DevDAONameService,
   DevDAONFT,
   DevDAOPriceOracle,
-  DevDAORegistry
+  DevDAORegistry,
 } from "../../web/src/typechain";
 
 let service: any;
@@ -25,27 +25,33 @@ const setup = deployments.createFixture(async () => {
     oracle: <DevDAOPriceOracle>await ethers.getContract("DevDAOPriceOracle"),
     registry: <DevDAORegistry>await ethers.getContract("DevDAORegistry"),
     service: <DevDAONameService>await ethers.getContract("DevDAONameService"),
-  }
+  };
 
   return {
     ...contracts,
-    users: await ethers.getSigners()
-  }
-})
+    users: await ethers.getSigners(),
+  };
+});
 
 describe("Developer DAO Name Service", () => {
   describe("DevDAONameService#mint", () => {
     it("throws when name is too long", async () => {
-      const { service, users: [alice,]} = await setup()
+      const {
+        service,
+        users: [alice],
+      } = await setup();
       try {
-        service.connect(alice).mint("A".repeat(10*10));
+        service.connect(alice).mint("A".repeat(10 * 10));
       } catch (error: any) {
         expect(error.message).eq("DISALLOWED_LENGTH");
       }
     });
 
     it("throws when name is too short", async () => {
-      const { service, users: [alice,]} = await setup()
+      const {
+        service,
+        users: [alice],
+      } = await setup();
       try {
         service.connect(alice).mint("A");
       } catch (error: any) {
@@ -58,8 +64,8 @@ describe("Developer DAO Name Service", () => {
         token,
         oracle,
         service,
-        users: [alice,]
-      } = await setup()
+        users: [alice],
+      } = await setup();
 
       const name = "alice";
       const value = await oracle.lengthToPrices(name.length);
