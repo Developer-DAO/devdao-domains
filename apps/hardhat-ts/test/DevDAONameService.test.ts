@@ -21,10 +21,10 @@ const setup = deployments.createFixture(async () => {
   await deployments.fixture("DevDAONameService");
 
   const contracts = {
-    token: <DevDAONFT>await ethers.getContract("DevDAONFT"),
-    oracle: <DevDAOPriceOracle>await ethers.getContract("DevDAOPriceOracle"),
-    registry: <DevDAORegistry>await ethers.getContract("DevDAORegistry"),
-    service: <DevDAONameService>await ethers.getContract("DevDAONameService"),
+    token: await ethers.getContract("DevDAONFT"),
+    oracle: await ethers.getContract("DevDAOPriceOracle"),
+    registry: await ethers.getContract("DevDAORegistry"),
+    service: await ethers.getContract("DevDAONameService"),
   };
 
   return {
@@ -71,7 +71,7 @@ describe("Developer DAO Name Service", () => {
       const value = await oracle.lengthToPrices(name.length);
       await service.connect(alice).mint(name, { value });
 
-      expect(await token.names(0)).eq(name);
+      expect(await token.names(1)).eq(name);
     });
   });
 });
