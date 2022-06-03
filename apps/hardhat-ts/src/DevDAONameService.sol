@@ -6,6 +6,11 @@ import "./interfaces/IDevDAONFT.sol";
 import "./interfaces/IDevDAOPriceOracle.sol";
 import "./interfaces/IDevDAORegistry.sol";
 
+error DISALLOWED_LENGTH();
+error NOT_ENOUGH_ETH();
+error ALREADY_MINTED();
+error MINT_FAILED();
+
 contract DevDAONameService is Ownable {
     uint8 public minLength = 3;
     uint8 public maxLength = 20;
@@ -49,17 +54,27 @@ contract DevDAONameService is Ownable {
 
     function mint(string calldata name) external payable {
         uint256 length = bytes(name).length; // we don't care about non-UTF8 lengths
-        require(
-            minLength <= length && length <= maxLength,
-            "DISALLOWED_LENGTH"
-        );
-        require(
-            msg.value >= oracle.lengthToPrices(uint8(length)),
-            "NOT_ENOUGH_ETH"
-        );
-        require(registry.namesToTokenId(name) == 0, "ALREADY_MINTED");
+        if (minLength > length) {
+            revert DISALLOWED_LENGTH();
+        }
+
+        if (length > maxLength) {
+            revert DISALLOWED_LENGTH();
+        }
+
+        if (msg.value < oracle.lengthToPrices(uint8(length))) {
+            revert NOT_ENOUGH_ETH();
+        }
+
+        if (registry.namesToTokenId(name) != 0) {
+            revert ALREADY_MINTED();
+        }
+
         // solhint-disable-next-line
         treasury.call{value: msg.value}("");
-        require(token.mint(msg.sender, name), "MINT_FAILED");
+
+        if (!token.mint(msg.sender, name)) {
+            revert MINT_FAILED();
+        }
     }
 }

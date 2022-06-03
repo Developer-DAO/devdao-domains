@@ -6,6 +6,9 @@ import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IDevDAONFT.sol";
 
+error ONLY_CONTROLLER();
+error ONLY_TOKEN();
+
 contract DevDAORegistry is Ownable, Initializable {
     using EnumerableSet for EnumerableSet.UintSet;
 
@@ -38,15 +41,16 @@ contract DevDAORegistry is Ownable, Initializable {
     mapping(uint256 => DevDAOContentMetadata) public contentRecords;
 
     modifier onlyController(uint256 tokenId) {
-        require(
-            controllerToTokenIds[msg.sender].contains(tokenId),
-            "ONLY_CONTROLLER"
-        );
+        if (!controllerToTokenIds[msg.sender].contains(tokenId)) {
+            revert ONLY_CONTROLLER();
+        }
         _;
     }
 
     modifier onlyToken() {
-        require(msg.sender == address(token), "ONLY_TOKEN");
+        if (msg.sender != address(token)) {
+            revert ONLY_TOKEN();
+        }
         _;
     }
 
