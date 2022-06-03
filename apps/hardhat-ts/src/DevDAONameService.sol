@@ -62,11 +62,11 @@ contract DevDAONameService is Ownable {
             revert DISALLOWED_LENGTH();
         }
 
-        if ( msg.value < oracle.lengthToPrices(uint8(length))) {
+        if (msg.value < oracle.lengthToPrices(uint8(length))) {
             revert NOT_ENOUGH_ETH();
         }
 
-        if (registry.namesToTokenId(name) != 0){
+        if (registry.namesToTokenId(name) != 0) {
             revert ALREADY_MINTED();
         }
 
